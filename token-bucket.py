@@ -1,3 +1,4 @@
+import random
 import time
 import threading 
 from datetime import datetime
@@ -30,7 +31,7 @@ def process():
 
 def request_in_sec():
     while True:
-        time.sleep(1 / REQUEST_PER_SEC)
+        time.sleep((1 - random.random()) / REQUEST_PER_SEC)
         res = process()
         if res:
             print(f'{datetime.now():%H%M%S}/ request processed')
@@ -38,10 +39,10 @@ def request_in_sec():
             print(f'{datetime.now()}/ request failed', file=sys.stderr)
 
 
-t = Thread(target=request_in_sec)
-t.start()
+request_thread = Thread(target=request_in_sec)
+request_thread.start()
 
 
-t = Thread(target=fill_bucket_in_time_window)
-t.start()
+bucket_fill_thread = Thread(target=fill_bucket_in_time_window)
+bucket_fill_thread.start()
 
