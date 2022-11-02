@@ -13,6 +13,10 @@ for line in sys.stdin:
 result = sorted(temp.items(), key=lambda x: x[0])
 dates = matplotlib.dates.date2num(list(map(lambda x: x[0], result)))
 counts = list(map(lambda x: x[1], result))
-plt.plot_date(dates, counts)
+plt.style.use('seaborn')
+plt.plot_date(dates, counts, linestyle='dashdot', fillstyle='full')
+plt.tight_layout()
+plt.xlabel('time')
+plt.ylabel('success counts')
 plt.show()
 
